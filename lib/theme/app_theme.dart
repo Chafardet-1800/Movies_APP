@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
 
-  static const Color primary = Colors.purple;
+  static const Color primary = Colors.indigo;
 
   static final ThemeData ligthTheme = ThemeData.light().copyWith(
        
@@ -71,9 +71,11 @@ class AppTheme {
 
     // Appbar theme
     appBarTheme: const AppBarTheme(
-      color: primary
-    ),
-    
+      color: primary,
+      foregroundColor: Colors.white,
+      centerTitle: true,
+    ), 
+
     textButtonTheme: TextButtonThemeData(
       style:  TextButton.styleFrom(
         foregroundColor: primary
@@ -82,6 +84,7 @@ class AppTheme {
 
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: primary,
+      foregroundColor: Colors.white,
       shape: CircleBorder()
     ),
 
@@ -90,33 +93,6 @@ class AppTheme {
         backgroundColor: primary,
         shape: const StadiumBorder()
       )
-    ),
-
-    inputDecorationTheme: const InputDecorationTheme(
-      floatingLabelStyle: TextStyle( color: primary ),
-      iconColor: primary,
-      prefixIconColor: primary,
-      suffixIconColor: primary,
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: primary),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: primary),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
-        ),
-      ),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
-        ),
-      ),
     ),
 
   );
