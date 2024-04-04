@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
    
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
   
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,14 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
         
-            CardSwiper(movies: moviesProvider.onDisplayMovies,),
+            CardSwiper(
+              movies: moviesProvider.onDisplayMovies
+            ),
         
-            const MovieSlider(),
+            MovieSlider(
+              movies: moviesProvider.popularMovies,
+              titulo: 'Las mas populares',
+            ),
         
           ],
         ),
