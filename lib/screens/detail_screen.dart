@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 
 import 'package:peliculas/theme/app_theme.dart';
+import 'package:peliculas/models/models.dart';
 import 'package:peliculas/widgets/widgets.dart';
 
 class DetailScreen extends StatelessWidget {
    
-  const DetailScreen({Key? key}) : super(key: key);
+  const DetailScreen({super.key});
   
   @override
   Widget build(BuildContext context) {
 
-    final String movie = ModalRoute.of(context)?.settings.arguments.toString() ?? 'no-movie';
+    final Movie movie = ModalRoute.of(context)?.settings.arguments as Movie;
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _CustomAppBar(),
+          _CustomAppBar(movie: movie,),
 
           SliverList(
             delegate: SliverChildListDelegate([
-              _PosterAndTitle(),
-              _Overview(),
-              _Overview(),
-              _Overview(),
+              _PosterAndTitle(movie: movie,),
+              _Overview(movie: movie,),
               const CastingCards()
 
             ])
@@ -35,9 +34,16 @@ class DetailScreen extends StatelessWidget {
 
 class _CustomAppBar extends StatelessWidget {
 
+  final Movie movie;
+
+  const _CustomAppBar({
+    required this.movie
+  });
+
   @override
   Widget build(BuildContext context) {
-    return   SliverAppBar(
+    
+    return SliverAppBar(
       backgroundColor: AppTheme.primary,
       expandedHeight: 200,
       floating: false,
@@ -50,27 +56,36 @@ class _CustomAppBar extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           color: Colors.black12,
           padding: const EdgeInsets.only( bottom: 15 ),
-          child:  const Text(
-            'Title',
-            style: TextStyle( fontSize: 18 ),
+          child: Text(
+            movie.title,
+            style: const TextStyle( fontSize: 18 ),
           ),
         ),
-        background: const FadeInImage(
-          placeholder: AssetImage('assets/loading.gif'), 
-          image: NetworkImage('https://via.placeholder.com/500x300'),
+        background: FadeInImage(
+          placeholder: const AssetImage('assets/loading.gif'), 
+          image: NetworkImage(movie.backdropPathUrl),
           fit: BoxFit.cover,
         ),
       ),
     );
+
   }
 }
 
 class _PosterAndTitle extends StatelessWidget {
 
+  final Movie movie;
+
+  const _PosterAndTitle({
+    required this.movie
+  });
+
   @override
   Widget build(BuildContext context) {
 
     final TextTheme textTheme = Theme.of(context).textTheme;
+
+    final size = MediaQuery.of(context);
 
     return Container(
       margin: const EdgeInsets.only( top: 20 ),
@@ -78,9 +93,9 @@ class _PosterAndTitle extends StatelessWidget {
       child: Row(children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: const FadeInImage(
-                placeholder: AssetImage('assets/no-image.jpg'), 
-                image: NetworkImage('https://via.placeholder.com/200x300'),
+          child: FadeInImage(
+                placeholder: const AssetImage('assets/no-image.jpg'), 
+                image: NetworkImage(movie.posterUrl),
                 fit: BoxFit.cover,
                 height: 150,
           ),
@@ -92,13 +107,13 @@ class _PosterAndTitle extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Movie.title', 
+              movie.title, 
               style: textTheme.headlineMedium,
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
             Text(
-              'Movie.originalTitle', 
+              movie.originalTitle, 
               style: textTheme.titleMedium,
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
@@ -111,7 +126,7 @@ class _PosterAndTitle extends StatelessWidget {
                 const SizedBox( width: 5 ),
 
                 Text(
-                  'Movie.voteAverage',
+                  movie.voteAverage.toString(),
                   style: textTheme.bodySmall,
                 )
               ],
@@ -126,6 +141,12 @@ class _PosterAndTitle extends StatelessWidget {
 
 class _Overview extends StatelessWidget {
 
+  final Movie movie;
+
+  const _Overview({
+    required this.movie
+  });
+
   @override
   Widget build(BuildContext context) {
 
@@ -134,7 +155,7 @@ class _Overview extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
       child: Text(
-        'Velit labore deserunt nulla ad. Anim dolore id ea proident sunt Lorem sint sit commodo ut. Laborum amet occaecat labore cupidatat adipisicing id enim minim elit ex labore laboris. Ut ipsum qui esse irure adipisicing deserunt nulla irure non ut do nulla ut. Ad magna laborum nisi et reprehenderit aliquip voluptate voluptate duis cupidatat in. Commodo do amet id incididunt sunt magna tempor. Duis sint ex nostrud culpa consectetur laborum et Lorem cillum. ',
+        movie.overview,
         textAlign: TextAlign.justify,
         style: textTheme.titleMedium,
       ),
