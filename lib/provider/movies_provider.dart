@@ -18,7 +18,10 @@ class MoviesProvider  extends ChangeNotifier{
 
   final String _page = '1';
 
+  List<Movie> onDisplayMovies = [];
+
   MoviesProvider() {
+    
     print('MoviesProvider inicializado');
 
     getOnDisplayMovies();
@@ -36,7 +39,9 @@ class MoviesProvider  extends ChangeNotifier{
 
     final response = NowPlayingResponse.fromRawJson(httpsResponse.body);
 
-    print(response.results[0].title);
+    onDisplayMovies = response.results;
+
+    notifyListeners();
 
   }
 

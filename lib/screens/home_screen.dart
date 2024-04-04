@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/provider/movies_provider.dart';
 
 import 'package:peliculas/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
    
@@ -8,6 +10,9 @@ class HomeScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+
+    final moviesProvider = Provider.of<MoviesProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Peliculas en cines'),
@@ -18,13 +23,13 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: [
         
-            CardSwiper(),
+            CardSwiper(movies: moviesProvider.onDisplayMovies,),
         
-            MovieSlider(),
+            const MovieSlider(),
         
           ],
         ),
