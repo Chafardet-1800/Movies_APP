@@ -51,14 +51,19 @@ class _CustomAppBar extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         titlePadding: const EdgeInsets.all(0),
-        title:  Container(
+        title: Container(
           width: double.infinity,
           alignment: Alignment.bottomCenter,
           color: Colors.black12,
-          padding: const EdgeInsets.only( bottom: 15 ),
+          padding: const EdgeInsets.only( 
+            bottom: 15, 
+            left: 10, 
+            right: 10
+          ),
           child: Text(
             movie.title,
             style: const TextStyle( fontSize: 18 ),
+            textAlign: TextAlign.center,
           ),
         ),
         background: FadeInImage(
@@ -85,7 +90,7 @@ class _PosterAndTitle extends StatelessWidget {
 
     final TextTheme textTheme = Theme.of(context).textTheme;
 
-    final size = MediaQuery.of(context);
+    final size = MediaQuery.of(context).size;
 
     return Container(
       margin: const EdgeInsets.only( top: 20 ),
@@ -103,35 +108,40 @@ class _PosterAndTitle extends StatelessWidget {
 
         const SizedBox( width: 20 ),
 
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              movie.title, 
-              style: textTheme.headlineMedium,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-            ),
-            Text(
-              movie.originalTitle, 
-              style: textTheme.titleMedium,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-            Row(
+        ConstrainedBox(
+          constraints: BoxConstraints( maxWidth: size.width - 190),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                movie.title, 
+                style: textTheme.headlineMedium,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
+          
+              Text(
+                movie.originalTitle, 
+                style: textTheme.titleMedium,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
 
-              children: [
-                const Icon(Icons.star_border_outlined, size: 15, color: Colors.grey),
-                
-                const SizedBox( width: 5 ),
-
-                Text(
-                  movie.voteAverage.toString(),
-                  style: textTheme.bodySmall,
-                )
-              ],
-            )
-          ],
+              Row(
+          
+                children: [
+                  const Icon(Icons.star_border_outlined, size: 15, color: Colors.grey),
+                  
+                  const SizedBox( width: 5 ),
+          
+                  Text(
+                    movie.voteAverage.toString(),
+                    style: textTheme.bodySmall,
+                  )
+                ],
+              )
+            ],
+          ),
         )
 
       ]),
