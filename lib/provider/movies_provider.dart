@@ -71,6 +71,8 @@ class MoviesProvider  extends ChangeNotifier{
   }
 
   Future<List<Cast>> getMoviesCast( int movieid ) async {
+
+    if( moviesCast.containsKey(movieid) ) return moviesCast[movieid]!;
     
     final jsonData = await _getJsonData('3/movie/$movieid/credits', _popularPage.toString());
 
