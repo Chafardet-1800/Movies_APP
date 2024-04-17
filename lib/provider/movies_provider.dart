@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import 'package:peliculas/models/models.dart';
+import 'package:peliculas/models/search_response.dart';
 
 class MoviesProvider  extends ChangeNotifier{
   
@@ -81,6 +82,21 @@ class MoviesProvider  extends ChangeNotifier{
     moviesCast[movieid] = response.cast;
 
     return response.cast;
+
+  }
+ 
+  Future<List<Movie>> searchMovie( String query ) async {
+
+    var url = Uri.https( _baseUrl, '3/search/movie', {
+      'language': _language,
+      'query': query
+    });
+
+    final httpsResponse = await http.get(url, headers: {HttpHeaders.authorizationHeader: "Bearer $_token"});
+
+    final response = SearchMovieResponse.fromRawJson(httpsResponse.body);
+    
+    return response.results;
 
   }
 

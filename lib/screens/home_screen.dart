@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:peliculas/provider/movies_provider.dart';
 import 'package:peliculas/search/search_delegate.dart';
 
